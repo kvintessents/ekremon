@@ -15,6 +15,7 @@ TopDownGame.Preload.prototype = {
     this.load.tilemap('level1', 'assets/tilemaps/Level01.json', null, Phaser.Tilemap.TILED_JSON);
     this.load.image('gameTiles', 'assets/images/tiles.png');
     this.load.image('cityTiles', 'assets/images/city.png');
+    this.load.image('lineTiles', 'assets/images/lines.png');
     this.load.spritesheet('player', 'assets/images/player.png', 32, 32);
   },
   create: function() {
