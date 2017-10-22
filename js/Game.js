@@ -17,10 +17,12 @@ TopDownGame.Game.prototype = {
     this.map.addTilesetImage('tiles', 'gameTiles');
     this.map.addTilesetImage('city', 'cityTiles');
     this.map.addTilesetImage('lines', 'lineTiles');
+    this.map.addTilesetImage('Garages', 'garageTiles');
  
     // create layer
     this.backgroundlayer = this.map.createLayer('backgroundLayer');
     this.foregroundLayer = this.map.createLayer('foregroundLayer');
+    this.foregroundDetailsLayer = this.map.createLayer('foregroundDetailsLayer');
 
     this.createPlayer();
 

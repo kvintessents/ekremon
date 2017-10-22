@@ -16,6 +16,7 @@ TopDownGame.Preload.prototype = {
     this.load.image('gameTiles', 'assets/images/tiles.png');
     this.load.image('cityTiles', 'assets/images/city.png');
     this.load.image('lineTiles', 'assets/images/lines.png');
+    this.load.image('garageTiles', 'assets/images/Garages.png');
     this.load.spritesheet('player', 'assets/images/player.png', 32, 32);
   },
   create: function() {
