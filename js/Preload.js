@@ -19,6 +19,7 @@ TopDownGame.Preload.prototype = {
     this.load.image('garageTiles', 'assets/images/Garages.png');
     this.load.spritesheet('player', 'assets/images/player.png', 32, 32);
   },
+
   create: function() {
     this.state.start('Game');
   }

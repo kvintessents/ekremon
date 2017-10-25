@@ -1,6 +1,4 @@
 var TopDownGame = TopDownGame || {};
-
-console.log('asd');
  
 //title screen
 TopDownGame.Game = function(){};
@@ -12,6 +10,7 @@ TopDownGame.Game.prototype = {
     this.game.renderer.renderSession.roundPixels = true;
 
     this.map = this.game.add.tilemap('level1');
+    this.game.map = this.map;
  
     // the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
     this.map.addTilesetImage('tiles', 'gameTiles');
@@ -22,7 +21,7 @@ TopDownGame.Game.prototype = {
     // create layer
     this.backgroundlayer = this.map.createLayer('backgroundLayer');
     this.foregroundLayer = this.map.createLayer('foregroundLayer');
-    this.foregroundDetailsLayer = this.map.createLayer('foregroundDetailsLayer');
+    this.bushLayer = this.map.createLayer('bushLayer');
 
     this.createPlayer();
 
@@ -47,7 +46,8 @@ TopDownGame.Game.prototype = {
     var result = this.findObjectsByType('playerStart', this.map, 'objectsLayer');
 
     //we know there is just one result
-    this.player = new Player(this.game, result[0].x, result[0].y);
+    this.player = new Player(this.game, store.get('player_x') || result[0].x, store.get('player_y') || result[0].y);
+    this.player.onCatch = this.onCatch.bind(this);
     this.game.add.existing(this.player);
 
     //the camera will follow the player in the world
@@ -97,15 +97,18 @@ TopDownGame.Game.prototype = {
     collectable.destroy();
   },
 
-  enterDoor: function(player, door) {
-    console.log('entering door that will take you to '+ door.targetTilemap + ' on x:' + door.targetX + ' and y:' + door.targetY);
-  },
-
   update: function() {
     this.player.updatePosition();
     //player movement
+  },
 
-    //this.game.physics.arcade.overlap(this.player, this.items, this.collect, null, this);
-    //this.game.physics.arcade.overlap(this.player, this.doors, this.enterDoor, null, this);
+  onCatch() {
+    this.saveState();
+    this.game.state.start('Fight');
+  },
+
+  saveState() {
+    store.set('player_x', this.player.position.x);
+    store.set('player_y', this.player.position.y);
   }
 }

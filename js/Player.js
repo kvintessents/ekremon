@@ -4,6 +4,8 @@ class Player extends Phaser.Sprite {
 
         this.game = game;
         this.cursors = game.input.keyboard.createCursorKeys();
+        this.catchTimer = null;
+        this.onCatch = null;
 
         this.initAnimations();
         this.initBody();
@@ -74,5 +76,24 @@ class Player extends Phaser.Sprite {
         }
 
         this.setPlayerAnimation();
+
+        if (!this.body.velocity.x && !this.body.velocity.y && !this.catchTimer) {
+            this.catchTimer = setTimeout(this.checkCatch.bind(this), 2000);
+        }
+
+        if ((this.body.velocity.x || this.body.velocity.y) && this.catchTimer) {
+            clearTimeout(this.catchTimer);
+            this.catchTimer = null;
+        }
+    }
+
+    checkCatch() {
+        const fgTile = this.game.map.getTileWorldXY(this.centerX, this.centerY, undefined, undefined, 'bushLayer');
+
+        if (!fgTile) {
+            return false;
+        }
+
+        this.onCatch();
     }
 }
